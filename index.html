@@ -82,41 +82,42 @@
   const SCRIPT_URL = "https://script.google.com/a/macros/teltelecom.com.br/s/AKfycbxlwoAP2Wl7UjqFZOmegwt_ojrouZCCqdHaCPdHuPz92Sbw3j--uzT2K4DOrYbvdceyQg/exec";
 
   async function fazerLogin() {
-    const usuario = document.getElementById("usuario").value;
-    const senha = document.getElementById("senha").value;
-    const msgDiv = document.getElementById("mensagem");
+  const usuario = document.getElementById("usuario").value;
+  const senha = document.getElementById("senha").value;
+  const msgDiv = document.getElementById("mensagem");
 
-    if (!usuario || !senha) {
-      msgDiv.innerText = "Preencha todos os campos!";
-      return;
-    }
-
-    msgDiv.style.color = "blue";
-    msgDiv.innerText = "Autenticando...";
-
-    try {
-      const response = await fetch(SCRIPT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify({ usuario, senha })
-      });
-
-      const res = await response.json();
-
-      if (res.status === "sucesso") {
-        // Salva a sessão simples no navegador
-        localStorage.setItem("usuario_logado", res.nome);
-        window.location.href = "Painel.html"; // Redireciona para o portal de ícones
-      } else {
-        msgDiv.style.color = "red";
-        msgDiv.innerText = res.mensagem;
-      }
-    } catch (err) {
-      msgDiv.style.color = "red";
-      msgDiv.innerText = "Erro de conexão com o servidor.";
-      console.error(err);
-    }
+  if (!usuario || !senha) {
+    msgDiv.innerText = "Preencha todos os campos!";
+    return;
   }
+
+  msgDiv.style.color = "blue";
+  msgDiv.innerText = "Autenticando...";
+
+  // Constrói a URL com os parâmetros codificados
+  const urlComParametros = `${SCRIPT_URL}?usuario=${encodeURIComponent(usuario)}&senha=${encodeURIComponent(senha)}`;
+
+  try {
+    const response = await fetch(urlComParametros, {
+      method: "GET",
+      redirect: "follow"
+    });
+
+    const res = await response.json();
+
+    if (res.status === "sucesso") {
+      localStorage.setItem("usuario_logado", res.nome);
+      window.location.href = "painel.html"; // Altere se o nome do seu arquivo do painel for diferente
+    } else {
+      msgDiv.style.color = "red";
+      msgDiv.innerText = res.mensagem;
+    }
+  } catch (err) {
+    msgDiv.style.color = "red";
+    msgDiv.innerText = "Erro de conexão com o servidor.";
+    console.error(err);
+  }
+}
 </script>
 
 </body>
