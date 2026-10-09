@@ -106,7 +106,7 @@
       if (res.status === "sucesso") {
         // Salva a sessão simples no navegador
         localStorage.setItem("usuario_logado", res.nome);
-        window.location.href = "painel.html"; // Redireciona para o portal de ícones
+        window.location.href = "Painel.html"; // Redireciona para o portal de ícones
       } else {
         msgDiv.style.color = "red";
         msgDiv.innerText = res.mensagem;
