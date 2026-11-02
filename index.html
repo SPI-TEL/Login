@@ -238,12 +238,7 @@
   const perfilUsuario = (localStorage.getItem("perfil_usuario") || "").trim();
   const ultimoAcesso = localStorage.getItem("ultimo_acesso") || "Primeiro acesso";
 
-  if (!usuarioLogado) {
-    alert("Acesso restrito. Por favor, faça login.");
-    window.location.href = "https://spi-tel.github.io/Login/";
-  }
-
-  // 2. Atualização dos dados do cabeçalho
+   // 2. Atualização dos dados do cabeçalho
   document.getElementById("nome-usuario").innerText = `Olá, ${usuarioLogado}`;
   document.getElementById("perfil-usuario").innerText = perfilUsuario || "Colaborador";
   document.getElementById("info-ultimo-acesso").innerText = `Último acesso: ${ultimoAcesso}`;
