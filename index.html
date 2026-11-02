@@ -294,7 +294,6 @@
   </div>
 
   <script>
-    // Substitua pela URL da implantação do Apps Script atualizada
     const SCRIPT_URL = "https://script.google.com/a/macros/teltelecom.com.br/s/AKfycbxlwoAP2Wl7UjqFZOmegwt_ojrouZCCqdHaCPdHuPz92Sbw3j--uzT2K4DOrYbvdceyQg/exec";
 
     function abrirModalPrimeiroAcesso() {
@@ -328,9 +327,10 @@
         const res = await response.json();
 
         if (res.status === "sucesso") {
-          // Salva os dados na sessão
+          // Gravação dos dados no localStorage
           localStorage.setItem("usuario_logado", res.nome);
-          localStorage.setItem("perfil_usuario", res.perfil); // Admin, Gerente, Coordenador, Supervisor
+          localStorage.setItem("perfil_usuario", res.perfil);
+          localStorage.setItem("ultimo_acesso", res.ultimoAcesso || "Primeiro acesso");
 
           window.location.href = "https://spi-tel.github.io/Painel/";
         } else {
